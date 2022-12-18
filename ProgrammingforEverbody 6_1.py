@@ -8,7 +8,7 @@ class coursera6_1:
     x=5
     print('Hello')
 
-    def print_lyrics(self):
+    def print_lyrics():
         print("I'm a lumberjack, and I'm okay. ")
         print('I sleep all night and I work all day.')
 
@@ -38,7 +38,7 @@ class coursera6_1:
 # and return a value to be used as the value of the function call in the calling expression.
 #The return keyword is used for this.
 
-    def greet2(self):
+    def greet2():
         return "Hello"
     print(greet2(), 'Glenn') #Hello Glenn
     print(greet2(), "Sally") #Hello Sally
