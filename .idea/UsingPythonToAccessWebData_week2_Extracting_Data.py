@@ -41,6 +41,63 @@ print(y) #['From:']
 # Fine-Tuning String Extraction
 # You can refind the match for re.findall() and separately determine which portion of the match is to be
 # extracted by using parenthese
-x = 'From cwen@iupui.edu Fri Jan  4 16:10:39 2008 1'
-y = refindall('\S+@\S+', x)
+x = 'From stephen@iupui.edu Fri Jan  4 16:10:39 2008 1'
+y = re.findall('\S+@\S+', x)
+#\S : non-blank, whitespace character
+print(y) #['stephen@iupui.edu']
+
+#Parentheses are not part of the match - but they tell where to start and stop what string to extract
+y = re.findall('\S+@\S+', x)
 print(y)
+y = re.findall('^From (\S+@\S+)', x)
+print(y) #print(y) #
+
+data = 'From stephen.marquard@uct.ac.za Fri Jan  4 16:10:39 2008 1'
+atpos = data.find('@')
+print(atpos, '?')
+sppos = data.find(' ', atpos)
+print(sppos)
+host = data[atpos+1 : sppos]
+print(host)
+
+#The double split pattern
+# Sometimes we split a line one way, and then grab one of the pieces of the line and split that piece again
+line = 'From stephen@iupui.edu Fri Jan  4 16:10:39 2008 1'
+words = line.split()
+print(words) #['From', 'stephen@iupui.edu', 'Fri', 'Jan', '4', '16:10:39', '2008', '1']
+email = words[1]
+pieces = email.split('@')
+print(pieces[1]) #iupui.edu
+
+#The Regex Version
+y = re.findall('@([^ ]*)', line)
+#'@([^ ]*)'     "@" -> Look through the string until you find an at sign
+# "[^ ] -> Match non-blank character
+# * Match many of them
+
+print(y) #['iupui.edu']
+
+#Even Cooler Regex Version
+import re
+y = re.findall('^From . *@([^ ]*)', line)
+#^From . *@([^ ]*)
+#^          Starting at the beginning of the line
+#From       Look for the string 'From '
+#.          any number of characters
+#*@         up to @
+# (         begin extracting
+# [^ ]      all the non blank characters
+# )         extract
+print(y)
+
+#Escape Character
+# If you want a special regular expression character to just behave
+# normally (most of the time) you prefix it with '\'
+import re
+x = 'We just received $10.00 for cookies.'
+y = re.findall('\$[0-9.]+', x)
+print(y) #['$10.00']
+# \$[0-9.]+
+# \$        A real dollar sign
+# [0-9.]    One or more numbers and or dots, A digit or period
+# +         At least one or more
