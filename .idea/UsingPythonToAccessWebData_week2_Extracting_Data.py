@@ -101,3 +101,11 @@ print(y) #['$10.00']
 # \$        A real dollar sign
 # [0-9.]    One or more numbers and or dots, A digit or period
 # +         At least one or more
+
+lin = 'From stephen.marquard@uct.ac.za Sat Jan  5 09:14:16 2008'
+z = re.findall('\S+?@\S+', lin)
+print(z) #['stephen.marquard@uct.ac.za']
+
+x = 'From: Using the : character'
+y = re.findall('^F.+:', x)
+print(y)
