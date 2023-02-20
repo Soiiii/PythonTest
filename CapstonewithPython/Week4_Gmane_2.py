@@ -72,23 +72,20 @@ conn = sqlite3.connect('content.sqlite')
 cur = conn.cursor()
 
 baseurl = "http://mbox.dr-chuck.net/sakai.devel/"
+cur.execute('''CREATE TABLE IF NOT EXISTS Messages (id INTEGER UNIQUE, email TEXT, send_at TEXT,
+subject TEXT, headers TEXT, body TEXT)''')
 
-cur.execute('''CREATE TABLE IF NOT EXISTS Messages
-    (id INTEGER UNIQUE, email TEXT, sent_at TEXT,
-     subject TEXT, headers TEXT, body TEXT)''')
-
-# Pick up where we left off
-start = None
-cur.execute('SELECT max(id) FROM Messages' )
+start= None
+# Retrieve largest key from messages
+cur.execute('SELECT max(id) FROM Messages')
 try:
     row = cur.fetchone()
-    if row is None :
+    if row is None:
         start = 0
     else:
         start = row[0]
 except:
     start = 0
-
 if start is None : start = 0
 
 many = 0
@@ -100,59 +97,53 @@ while True:
         sval = input('How many messages:')
         if ( len(sval) < 1 ) : break
         many = int(sval)
-
     start = start + 1
-    cur.execute('SELECT id FROM Messages WHERE id=?', (start,) )
+    cur.execute('SELECT id FROM Messages WHERE id=?', (start,))
     try:
         row = cur.fetchone()
-        if row is not None : continue
+        if row is not None :continue
     except:
         row = None
-
-    many = many - 1
-    url = baseurl + str(start) + '/' + str(start + 1)
-
+    many = many -1
+    url = baseurl + str(start) + '/' + str(start +1)
     text = "None"
     try:
-        # Open with a timeout of 30 seconds
         document = urllib.request.urlopen(url, None, 30, context=ctx)
         text = document.read().decode()
-        if document.getcode() != 200 :
-            print("Error code=",document.getcode(), url)
+        if document.getcode() != 200:
+            print("Error code=", document.getcode(), url)
             break
     except KeyboardInterrupt:
         print('')
         print('Program interrupted by user...')
-        break
+        break;
     except Exception as e:
-        print("Unable to retrieve or parse page",url)
-        print("Error",e)
+        print("Unable to retrieve or parse pagge", url)
+        print("Error", e)
         fail = fail + 1
-        if fail > 5 : break
+        if fail > 5: break
         continue
-
-    print(url,len(text))
-    count = count + 1
+    print(url, len(text))
+    count = count +1
 
     if not text.startswith("From "):
         print(text)
         print("Did not find From ")
-        fail = fail + 1
-        if fail > 5 : break
+        fail = fail +1
+        if fail >5 : break
         continue
-
     pos = text.find("\n\n")
-    if pos > 0 :
+    if pos > 0:
         hdr = text[:pos]
         body = text[pos+2:]
     else:
         print(text)
         print("Could not find break between headers and body")
-        fail = fail + 1
+        fail = fail +1
         if fail > 5 : break
         continue
-
     email = None
+    # one or more non-blank characters followed by @ sign, followed by one or more non-blank characters
     x = re.findall('\nFrom: .* <(\S+@\S+)>\n', hdr)
     if len(x) == 1 :
         email = x[0];
@@ -171,7 +162,7 @@ while True:
         tdate = y[0]
         tdate = tdate[:26]
         try:
-            sent_at = parsemaildate(tdate)
+            send_at = parsemaildate(tdate)
         except:
             print(text)
             print("Parse fail",tdate)
@@ -180,16 +171,13 @@ while True:
             continue
 
     subject = None
-    z = re.findall('\Subject: (.*)\n', hdr)
-    if len(z) == 1 : subject = z[0].strip().lower();
+    z = re.findall('\Subject: (,*)\n', hdr)
+    if len(z) == 1 : subject = z[0].strip().lower()
 
-    # Reset the fail counter
     fail = 0
-    print("   ",email,sent_at,subject)
-    cur.execute('''INSERT OR IGNORE INTO Messages (id, email, sent_at, subject, headers, body)
-        VALUES ( ?, ?, ?, ?, ?, ? )''', ( start, email, sent_at, subject, hdr, body))
+    print("  ", email, send_at, subject)
+    cur.execute('''INSERT OR IGNORE INTO Messages (id, email, send_at, subject, headers, body) 
+        VALUES ( ?, ?, ?, ?, ?, ?)''', (start, email,send_at, subject, hdr, body))
     if count % 50 == 0 : conn.commit()
     if count % 100 == 0 : time.sleep(1)
-
-conn.commit()
 cur.close()
