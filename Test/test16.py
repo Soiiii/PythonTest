@@ -9,10 +9,16 @@ def solution(arr, queries):
         query = queries[i]
         a = query[0]
         b = query[1]
-        originNum = arr[query[0]]
-        changeNum = arr[query[1]]
+        originNum = arr[a]
+        changeNum = arr[b]
         arr[b] = originNum
         arr[a] = changeNum
         answer = arr
     return answer
 solution([0, 1, 2, 3, 4], [[0, 3],[1, 2],[1, 4]])
+
+def solution2(arr, queries):
+    for a,b in queries:
+        print('a:', a, 'b:', b)
+        arr[a],arr[b] = arr[b],arr[a]
+solution2([0, 1, 2, 3, 4], [[0, 3,2],[1, 2,3],[1, 4,4]])
