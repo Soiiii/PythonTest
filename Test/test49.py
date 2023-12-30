@@ -13,18 +13,30 @@
 # return하는 solution 함수를 완성해주세요.
 
 def solution(name, yearning, photo):
-    answer = []
-    result = []
-    total = 0
-    for ll in photo:
-        answer = ll
-        for num in range(len(answer)):
-            for a in range(len(name)):
-                if answer[num] == name[a]:
-                    total += yearning[a]
-        result.append(total)
-        total = 0
-    return result
+    dictionary = dict(zip(name,yearning))
+    scores = []
+    for pt in photo:
+        score = 0
+        for p in pt:
+            if p in dictionary:
+                score += dictionary[p]
+        scores.append(score)
+    return scores
+
+
+# def solution(name, yearning, photo):
+#     answer = []
+#     result = []
+#     total = 0
+#     for ll in photo:
+#         answer = ll
+#         for num in range(len(answer)):
+#             for a in range(len(name)):
+#                 if answer[num] == name[a]:
+#                     total += yearning[a]
+#         result.append(total)
+#         total = 0
+#     return result
 
 solution(["may", "kein", "kain", "radi"],[5, 10, 1, 3], [["may", "kein", "kain", "radi"],["may", "kein", "brin", "deny"], ["kon", "kain", "may", "coni"]]	)
 # solution(["kali", "mari", "don"],[11, 1, 55],[["kali", "mari", "don"], ["pony", "tom", "teddy"], ["con", "mona", "don"]])
