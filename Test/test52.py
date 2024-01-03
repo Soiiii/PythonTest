@@ -9,9 +9,18 @@
 # return false.
 
 def solution(s):
-    answer = True
+    a = list(s.lower())
+    p=0
+    y=0
+    for num in a:
+        if num == 'p':
+            p += 1
+        elif num == 'y':
+            y += 1
+    if p == y or (p == 0 and y == 0):
+        result=True
+    else:
+        result=False
+    return result
 
-    # [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
-    print('Hello Python')
-
-    return True
+print(solution("pPoooyY"))
