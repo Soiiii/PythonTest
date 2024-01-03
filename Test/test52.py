@@ -17,10 +17,6 @@ def solution(s):
             p += 1
         elif num == 'y':
             y += 1
-    if p == y or (p == 0 and y == 0):
-        result=True
-    else:
-        result=False
-    return result
+    return p==y
 
 print(solution("pPoooyY"))
