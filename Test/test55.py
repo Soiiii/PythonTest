@@ -8,6 +8,7 @@ def solution(arr):
     b = []
     for a in range(len(arr)):
         print(arr[a:])
+        print(arr[a:3])
         if arr[a] == 2:
             answer.append(arr[a:])
     return answer
