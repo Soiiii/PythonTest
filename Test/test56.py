@@ -11,13 +11,15 @@
 # 문자열 s이 주어질 때, 위와 같이 정의된 연산을 수행하는 함수 solution을 완성해주세요.
 
 def solution(s):
-    answer = []
-    aa = []
-    aa = list(s)
-    for i in range(len(aa)):
-        print(aa.count(aa[i]))
-        # print(s.count(list[i]))
-        # if i == 0:
-        #     answer.append('-1')
-        # if list[i] ==
-    return answer
+    result = []
+    last_seen = {}
+
+    for i, char in enumerate(s):
+        if char not in last_seen or last_seen[char] == -1:
+            result.append(-1)
+        else:
+            result.append(i - last_seen[char])
+
+        last_seen[char] = i
+        print(last_seen)
+    return result
