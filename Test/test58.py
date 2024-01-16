@@ -18,20 +18,14 @@
 def solution(k, score):
     answer = []
     a = []
-    for i in range(len(score)):
-        if i < k:
-            answer.append(score[i])
-            a.append(answer[0])
-        answer.sort()
-        print('answer',answer)
-        print(score[i], answer[0])
-        if len(answer) == k:
-            answer.pop()
-        if score[i] > answer[0]:
-            answer.append(score[i])
-
+    for i in score:
+        if len(a) < k:
+            a.append(i)
         else:
-            a.append(answer[0])
-    return a
+            if min(a)< i:
+                a.remove(min(a))
+                a.append(i)
+        answer.append(min(a))
+    return answer
 
-solution(3,[10, 100, 20, 150, 1, 100, 200])
+print(solution(3,[10, 100, 20, 150, 1, 100, 200]))
