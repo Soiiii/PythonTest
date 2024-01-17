@@ -5,11 +5,19 @@
 
 def solution(arr):
     answer = []
-    for a in arr:
-
+    result = []
+    if 2 in arr:
+        for a in range(len(arr)):
+            if arr[a] == 2:
+                answer.append(a)
+        if len(answer) > 1:
+            result = arr[answer[0]:answer[-1]+1]
+        else:
+            result.append(arr[answer[0]])
     else:
-        answer.append(-1)
-    return answer
+        result.append(-1)
+    return result
 
-solution([1, 2, 1, 4, 5, 2, 9])
+# print(solution([1, 2, 1, 4, 5, 2, 9]))
 # print(solution([1, 1, 1]))
+print(solution([1, 2, 1, 2, 1, 10, 2, 1]))
