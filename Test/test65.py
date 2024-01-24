@@ -13,14 +13,13 @@
 
 def solution(k, m, score):
     answer = 0
-    score.sort(reverse=True)
+    score = sorted(score, reverse = True)
 
-    while len(score) >= m:
-        box = score[:m]  # Take the first m elements as one box
-        min_score = min(box)
-        answer += min_score * m
-        score = score[m:]  # Remove the used apples from the list
+    for i in range(0, len(score), m):
+        tmp = score[i:i+m]
 
+        if len(tmp) == m:
+            answer += min(tmp) * m
     return answer
 
 # def solution(k, m, score):
