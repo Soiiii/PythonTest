@@ -11,6 +11,7 @@
 # dic과 spell 모두 중복된 원소를 갖지 않습니다.
 def solution(spell, dic):
     answer = []
+    # 정렬 전
     # spell 정렬
     spell.sort()
     # dic for문 돌리기
