@@ -4,7 +4,6 @@
 # left부터 right까지의 모든 수들 중에서, 약수의 개수가 짝수인 수는 더하고,
 # 약수의 개수가 홀수인 수는 뺀 수를 return 하도록 solution 함수를 완성해주세요.
 
-
 def solution(left, right):
     answer = 0
     result = 0
@@ -13,9 +12,8 @@ def solution(left, right):
             if i % j == 0:
                 answer += 1
         if answer % 2 == 0:
-            print('j',j)
             result += j
         else:
-            print('-j',j)
             result -= j
+        answer = 0
     return result
