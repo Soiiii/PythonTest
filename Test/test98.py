@@ -10,22 +10,41 @@
 # 이 s를 왼쪽으로 x (0 ≤ x < (s의 길이)) 칸만큼 회전시켰을 때 s가
 # 올바른 괄호 문자열이 되게 하는 x의 개수를 return 하도록 solution 함수를 완성해주세요.
 #
+def solution(s):
+    answer = 0
+    s = list(s)
+    for _ in range(len(s)):
+        stack = []
+        for i in range(len(s)):
+            if len(stack) > 0:
+                if stack[-1] == '[' and s[i] == ']': stack.pop()
+                elif stack[-1] == '{' and s[i] == '}': stack.pop()
+                elif stack[-1] == '(' and s[i] == ')': stack.pop()
+                else:
+                    stack.append(s[i])
+            else:
+                stack.append(s[i])
+        if len(stack) == 0:
+            answer += 1
+        s.append(s.pop(0))
+print(solution("[](){}"))
 
 def bracket(s):
     stack = []
-    for i in s:
-        if len(stack) == 0: stack.append(i)
-        else:
-            if i == ")" and stack[-1] == "(":   stack.pop()
-            elif i == "]" and stack[-1] == "[":   stack.pop()
-            elif i == "}" and stack[-1] == "{":   stack.pop()
-            else: stack.append(i)
-    return 1 if len(stack) == 0 else 0
+    listA = list(s)
+    # for i in range(len(listA)):
+    stack.append(listA[0])
+    listA.pop(0)
+    listA.append(stack[0])
+    stack.clear()
+    dict = {"(":")","{":"}","[":"]"}
+    print(dict.get("("))
+    # for i in listA:
+    #     if i == "(" :
+    #         dict.get("(")
+    #
+    #     elif i == dict("{"):
+    #
+    #     elif i == dict("["):
 
-def solution(s):
-    answer = 0
-
-    for i in range(len(s)):
-        if bracket(s):  answer +=1
-        s = s[1:] + s[:1]
-    return answer
+# bracket("[](){}")
