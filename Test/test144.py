@@ -11,12 +11,16 @@
 #
 # string convert(string s, int numRows);
 
-
 class Solution:
     def convert(self, s: str, numRows: int) -> str:
-        listA = []
-        for i in s:
-            listA.append(i)
-        num = (numRows - 1) * 2
-        answer = ' '.join[listA[:numRows]]
-        print(listA[num])
+        if numRows == 1:
+            return s
+        res = ""
+        for r in range(numRows):
+            increment = 2 * (numRows-1)
+            for i in range(r, len(s), increment):
+                print('i', i)
+                res += s[i]
+                if(r>0 and r < numRows-1 and i + increment - (2*r) < len(s)):
+                    res += s[i + increment - 2 * r]
+        return res
