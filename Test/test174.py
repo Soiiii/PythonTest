@@ -14,22 +14,16 @@
 # 자연수 n이 매개변수로 주어질 때, n을 124 나라에서 사용하는 숫자로 바꾼 값을 return 하도록 solution 함수를 완성해 주세요.
 
 def solution(n):
-    answer = 0
-    array = [1,2,4]
-    value = n // 3
-    if n%3 == 0:
-        if n == 3:
-            answer = 4
-        else:
-            answer = (((value))*10)+array[2]
-    elif n%3 == 1:
-        if value == 0:
-            answer = 1
-        else:
-            answer = (((value))*10)+array[0]
-    elif n%3 == 2:
-        if value == 0:
-            answer = 2
-        else:
-            answer = (((value))*10)+array[1]
-    return str(answer)
+    answer = ''
+    numbers = ['4', '1', '2']
+
+    while n > 0:
+        remainder = n % 3
+        n = n // 3
+
+        if remainder == 0:
+            n -= 1
+
+        answer = numbers[remainder] + answer
+
+    return answer
