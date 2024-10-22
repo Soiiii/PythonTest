@@ -9,3 +9,4 @@ for log_file in os.listdir(log_path):
         with open(os.path.join(log_path, log_file), 'r') as file:
             print(f"Reading {log_file}...")
             print(file.read())
+
