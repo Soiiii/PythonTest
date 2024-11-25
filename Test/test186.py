@@ -11,7 +11,7 @@
 #
 # Input: a = "1010", b = "1011"
 # Output: "10101"
-#
+
 
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
