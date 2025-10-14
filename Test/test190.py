@@ -25,5 +25,5 @@ class Solution:
                 b.append(num)
                 # 중복된 수는 삭제
                 unique = list(dict.fromkeys(b))
-    # 두번째 입력 받은 수를 unique 배열에서 뽑아냄
+    # 두번째 입력 받은 수를 unique 배열에서 뽑음
     print(unique[n2-1])
