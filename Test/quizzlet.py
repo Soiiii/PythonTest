@@ -1,3 +1,4 @@
+import re
 import pandas as pd
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
@@ -31,8 +32,11 @@ def normalize(text):
 
 
 def split_answers(text):
-    return [normalize(t) for t in str(text).split("/") if t.strip()]
-
+    return [
+        normalize(t)
+        for t in re.split(r"[\/,]", str(text))
+        if t.strip()
+    ]
 
 def is_correct(correct_answer, user_input):
     """
